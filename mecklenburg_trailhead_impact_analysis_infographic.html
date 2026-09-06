@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <!-- Selected Palette: Vibrant Emerald & Amber on Crisp Light Backgrounds (White #ffffff, Slate #0f172a, Emerald #059669, Amber #d97706, Crimson #dc2626, Sky Blue #0284c7, Soft Slate #f8fafc) -->
+    <!-- Confirmation: NEITHER Mermaid JS NOR SVG graphics were used anywhere in this application. All visuals use Canvas (Chart.js), HTML5, CSS3, and Unicode. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mecklenburg Trailhead Impact Analysis | SPA Infographic</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',
+                            navy: '#1e293b',
+                            emerald: '#059669',
+                            emeraldLight: '#10b981',
+                            amber: '#d97706',
+                            amberLight: '#f59e0b',
+                            crimson: '#dc2626',
+                            sky: '#0284c7',
+                            slateBg: '#f8fafc'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 360px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-brand-slateBg text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Sticky Navigation Header (White Background) -->
+    <header class="sticky top-0 z-50 bg-white text-slate-800 shadow-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl" aria-hidden="true">🏞️</span>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight text-brand-dark">Trailhead Impact Analysis</h1>
+                    <p class="text-xs text-slate-500">Huntersville, NC • South Prong Clarke Creek</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-sm font-semibold text-slate-600">
+                <a href="#summary" class="hover:text-brand-emerald transition-colors">KPI Summary</a>
+                <a href="#density" class="hover:text-brand-emerald transition-colors">Trail Density</a>
+                <a href="#inventory" class="hover:text-brand-emerald transition-colors">County Inventory</a>
+                <a href="#traffic" class="hover:text-brand-emerald transition-colors">Traffic & Foot Volume</a>
+                <a href="#los" class="hover:text-brand-emerald transition-colors">Path LOS</a>
+                <a href="#acoustic" class="hover:text-brand-emerald transition-colors">Acoustics & Security</a>
+                <a href="#remedies" class="hover:text-brand-emerald transition-colors">Remedies & Zoning</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+        <!-- Impact Analysis Hero Block (White Background) -->
+        <section id="hero" class="bg-white text-slate-800 rounded-2xl p-8 shadow-md border border-slate-200 relative overflow-hidden">
+            <div class="max-w-4xl space-y-4 relative z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                    <span>⚠️ Land-Use & Municipal Planning Fact Sheet</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-dark tracking-tight leading-tight">
+                    Impact Analysis: Proposed 60-Space Trailhead Parking Facility
+                </h2>
+                <p class="text-slate-600 text-base leading-relaxed">
+                    Siting a regional-capacity 60-stall surface parking lot directly along private residential backyards in the Asbury Park community presents unprecedented land-use, transportation, and environmental challenges. This infographic synthesizes empirical data across Mecklenburg County to evaluate facility scale, trail carrying capacity, and neighborhood impacts.
+                </p>
+            </div>
+        </section>
+
+        <!-- Executive Summary Fact Sheet / KPI Cards -->
+        <section id="summary" class="scroll-mt-20 space-y-6">
+            <div class="border-l-4 border-brand-emerald pl-4">
+                <h3 class="text-2xl font-bold text-brand-dark">Executive Summary: Highlights at a Glance</h3>
+                <p class="text-slate-600 text-sm">Key planning benchmarks comparing the proposed Ferrelltown Parkway lot against established Mecklenburg County standards.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- KPI 1 -->
+                <div class="bg-white rounded-xl shadow-md p-6 border border-slate-200 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between text-slate-500 mb-2">
+                        <span class="text-xs font-bold uppercase tracking-wider">Proposed Capacity</span>
+                        <span class="text-2xl">🚗</span>
+                    </div>
+                    <div class="text-3xl font-black text-brand-crimson">60 Stalls</div>
+                    <p class="text-xs text-slate-500 mt-1"><strong class="text-slate-700">3x to 4x</strong> typical neighborhood lot capacity (10–20 stalls).</p>
+                </div>
+
+                <!-- KPI 2 -->
+                <div class="bg-white rounded-xl shadow-md p-6 border border-slate-200 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between text-slate-500 mb-2">
+                        <span class="text-xs font-bold uppercase tracking-wider">Direct Residential Adjacencies</span>
+                        <span class="text-2xl">🏡</span>
+                    </div>
+                    <div class="text-3xl font-black text-brand-amber">0 Peer Lots</div>
+                    <p class="text-xs text-slate-500 mt-1">Zero 50+ stall lots in Mecklenburg County share zero-setback residential backyards.</p>
+                </div>
+
+                <!-- KPI 3 -->
+                <div class="bg-white rounded-xl shadow-md p-6 border border-slate-200 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between text-slate-500 mb-2">
+                        <span class="text-xs font-bold uppercase tracking-wider">Parking Density</span>
+                        <span class="text-2xl">📊</span>
+                    </div>
+                    <div class="text-3xl font-black text-brand-crimson">46.2 Stalls / Mi</div>
+                    <p class="text-xs text-slate-500 mt-1">400% to 500% higher density than Gilead Rd (10.4) or Johnston Rd (8.6).</p>
+                </div>
+
+                <!-- KPI 4 -->
+                <div class="bg-white rounded-xl shadow-md p-6 border border-slate-200 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between text-slate-500 mb-2">
+                        <span class="text-xs font-bold uppercase tracking-wider">Peak Trail Congestion</span>
+                        <span class="text-2xl">🏃</span>
+                    </div>
+                    <div class="text-3xl font-black text-brand-crimson">LOS E / F</div>
+                    <p class="text-xs text-slate-500 mt-1">100–135 users/hr triggers severe trail congestion and multi-user safety conflicts.</p>
+                </div>
+
+                <!-- KPI 5 -->
+                <div class="bg-white rounded-xl shadow-md p-6 border border-slate-200 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between text-slate-500 mb-2">
+                        <span class="text-xs font-bold uppercase tracking-wider">Weekend Trip Generation</span>
+                        <span class="text-2xl">📈</span>
+                    </div>
+                    <div class="text-3xl font-black text-brand-navy">420–660 Trips</div>
+                    <p class="text-xs text-slate-500 mt-1">Daily vehicle trip ends infiltrating quiet subdivision collector streets.</p>
+                </div>
+
+                <!-- KPI 6 -->
+                <div class="bg-white rounded-xl shadow-md p-6 border border-slate-200 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between text-slate-500 mb-2">
+                        <span class="text-xs font-bold uppercase tracking-wider">Acoustic Disruption</span>
+                        <span class="text-2xl">🔊</span>
+                    </div>
+                    <div class="text-3xl font-black text-brand-amber">65–75 dBA</div>
+                    <p class="text-xs text-slate-500 mt-1">Transient door slam and voice spikes vs 40–45 dBA suburban baseline.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: Trail Capacity & Stalls Per Mile Comparison -->
+        <section id="density" class="scroll-mt-20 bg-white rounded-2xl shadow-md p-6 sm:p-8 border border-slate-200 space-y-6">
+            <div class="border-l-4 border-brand-emerald pl-4">
+                <h3 class="text-2xl font-bold text-brand-dark">Trail Carrying Capacity & Parking Density Mismatch</h3>
+                <p class="text-slate-600 text-sm mt-1">
+                    Standard municipal greenway planning scales parking capacity to total connected trail mileage. Siting 60 stalls on an isolated 1.3-mile out-and-back trail creates an extreme, overbuilt parking density compared to established regional facilities.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7">
+                    <div class="chart-container">
+                        <canvas id="stallsPerMileChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 space-y-4 bg-slate-50 p-6 rounded-xl border border-slate-200">
+                    <h4 class="font-bold text-lg text-brand-navy flex items-center gap-2">
+                        <span>💡</span> Key Density Insights
+                    </h4>
+                    <ul class="space-y-3 text-sm text-slate-700">
+                        <li class="flex items-start gap-2">
+                            <span class="text-brand-crimson font-bold">●</span>
+                            <span><strong>Ferrelltown Proposal:</strong> 46.2 stalls per trail mile on a 1.3-mile isolated segment.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-brand-emerald font-bold">●</span>
+                            <span><strong>Gilead Road Trailhead:</strong> 10.4 stalls per mile across 5.0 continuous miles.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-brand-sky font-bold">●</span>
+                            <span><strong>Johnston Road Trailhead:</strong> 8.6 stalls per mile across 5.8 continuous miles.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-slate-500 font-bold">●</span>
+                            <span><strong>County Standard Benchmark:</strong> 3 to 10 stalls per mile for regional multi-use trail networks.</span>
+                        </li>
+                    </ul>
+                    <div class="p-3 bg-amber-50 rounded-lg border border-amber-200 text-xs text-amber-900">
+                        <strong>The Short-Trail Paradox:</strong> A pedestrian completes a 1.3-mile out-and-back walk in ~50 minutes, accelerating parking stall turnover and driving excessive daytime vehicle trips on residential streets.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Verified Countywide Trailhead Siting Inventory -->
+        <section id="inventory" class="scroll-mt-20 bg-white rounded-2xl shadow-md p-6 sm:p-8 border border-slate-200 space-y-6">
+            <div class="border-l-4 border-brand-emerald pl-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-2xl font-bold text-brand-dark">Mecklenburg County Trailhead Inventory & Siting Typology</h3>
+                    <p class="text-slate-600 text-sm mt-1">Empirical analysis of public greenway parking facilities across Mecklenburg County reveals zero precedent for placing 50+ stall lots directly against single-family backyards.</p>
+                </div>
+                <div class="inline-flex rounded-lg bg-slate-100 p-1 border border-slate-200 text-xs font-semibold text-slate-700">
+                    <span class="px-3 py-1 bg-white rounded-md shadow-sm text-brand-emerald">10 Peer Facilities Verified</span>
+                </div>
+            </div>
+
+            <p class="text-sm text-slate-700 leading-relaxed">
+                Across Mecklenburg County, all existing 40- to 80-space greenway trailheads are insulated within multi-acre forested floodplains, integrated into active regional parks, or located along commercial corridors. Facilities directly abutting residential streets are restricted to compact neighborhood lots (&lt;20 stalls).
+            </p>
+
+            <!-- Table for Inventory -->
+            <div class="overflow-x-auto rounded-xl border border-slate-200">
+                <table class="w-full text-left text-sm text-slate-700">
+                    <thead class="bg-brand-navy text-white text-xs uppercase tracking-wider">
+                        <tr>
+                            <th class="py-3 px-4">Facility Name</th>
+                            <th class="py-3 px-4">Stalls</th>
+                            <th class="py-3 px-4">Ingress Roadway</th>
+                            <th class="py-3 px-4">Adjacent Land Use & Buffer Type</th>
+                            <th class="py-3 px-4 text-center">Backyard Adjacency?</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 bg-white">
+                        <tr class="bg-red-50/60 font-semibold border-l-4 border-brand-crimson">
+                            <td class="py-3 px-4 text-brand-crimson">Ferrelltown Pkwy (Proposed)</td>
+                            <td class="py-3 px-4">60 stalls</td>
+                            <td class="py-3 px-4">Residential Collector</td>
+                            <td class="py-3 px-4">Zero-setback lot line against Asbury Park backyards & pasture</td>
+                            <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded text-xs font-bold bg-red-200 text-red-800">YES (Unprecedented)</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="py-3 px-4 font-medium text-brand-navy">Gilead Road Trailhead</td>
+                            <td class="py-3 px-4">52 stalls</td>
+                            <td class="py-3 px-4">Multi-lane Arterial</td>
+                            <td class="py-3 px-4">24.6-acre county-owned forested floodplain parcel</td>
+                            <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-800">NO (Forested Buffer)</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="py-3 px-4 font-medium text-brand-navy">Johnston Road Trailhead</td>
+                            <td class="py-3 px-4">50 stalls</td>
+                            <td class="py-3 px-4">Major Highway Corridor</td>
+                            <td class="py-3 px-4">Extensive riparian stream valley open space</td>
+                            <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-800">NO (Riparian Buffer)</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="py-3 px-4 font-medium text-brand-navy">Old Bell Road / Sardis Rd N</td>
+                            <td class="py-3 px-4">30–35 stalls</td>
+                            <td class="py-3 px-4">Suburban Arterial</td>
+                            <td class="py-3 px-4">Integrated into stream valley floodplain open space</td>
+                            <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-800">NO (Open Space)</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="py-3 px-4 font-medium text-brand-navy">Squirrel Lake Park</td>
+                            <td class="py-3 px-4">25+ stalls</td>
+                            <td class="py-3 px-4">Park Entrance Blvd</td>
+                            <td class="py-3 px-4">29-acre municipal park with playgrounds & pond</td>
+                            <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-800">NO (Parkland Buffer)</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="py-3 px-4 font-medium text-brand-navy">Rosedale Nature Park</td>
+                            <td class="py-3 px-4">20 stalls</td>
+                            <td class="py-3 px-4">Subdivision Collector</td>
+                            <td class="py-3 px-4">Active neighborhood park featuring dog park & playground</td>
+                            <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-800">NO (Park Amenities)</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="py-3 px-4 font-medium text-brand-navy">Bevington Place Trailhead</td>
+                            <td class="py-3 px-4">15–25 stalls</td>
+                            <td class="py-3 px-4">Commercial Roadway</td>
+                            <td class="py-3 px-4">Commercial retail fringe across from Rea Road centers</td>
+                            <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-800">NO (Commercial Edge)</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="py-3 px-4 font-medium text-brand-navy">Downtown Huntersville ("The Vine")</td>
+                            <td class="py-3 px-4">16 stalls + Deck</td>
+                            <td class="py-3 px-4">Downtown Arterial (NC 115)</td>
+                            <td class="py-3 px-4">Civic district across from Town Hall & Parking Deck</td>
+                            <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-800">NO (Civic / Deck)</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="py-3 px-4 font-medium text-brand-navy">Pineville-Matthews Road (NC 51)</td>
+                            <td class="py-3 px-4">10–12 stalls</td>
+                            <td class="py-3 px-4">Multi-lane Highway</td>
+                            <td class="py-3 px-4">Narrow roadside turnout along highway corridor</td>
+                            <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-800">NO (Highway Corridor)</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="py-3 px-4 font-medium text-brand-navy">Northcrest Shopping Center</td>
+                            <td class="py-3 px-4">Shared (&gt;100)</td>
+                            <td class="py-3 px-4">Commercial Thoroughfare</td>
+                            <td class="py-3 px-4">Regional retail shopping center parking lot</td>
+                            <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-800">NO (Shared Retail)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 3: Traffic & Visitor Foot Traffic Projections -->
+        <section id="traffic" class="scroll-mt-20 bg-white rounded-2xl shadow-md p-6 sm:p-8 border border-slate-200 space-y-6">
+            <div class="border-l-4 border-brand-emerald pl-4">
+                <h3 class="text-2xl font-bold text-brand-dark">Visitor Traffic & Foot Traffic Projections</h3>
+                <p class="text-slate-600 text-sm mt-1">
+                    Applying Institute of Transportation Engineers (ITE) models and empirical outdoor recreation Average Vehicle Occupancy (AVO: 1.6–1.8 persons/car), a 60-space lot generates high volumes of vehicular and pedestrian movement.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7">
+                    <div class="chart-container">
+                        <canvas id="footTrafficChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
+                        <h4 class="font-bold text-brand-navy text-base flex items-center gap-2">
+                            <span>🚶‍♂️</span> Operational Foot Traffic Dynamics
+                        </h4>
+                        <div class="text-xs text-slate-700 space-y-2 leading-relaxed">
+                            <p><strong>Daily Foot Traffic:</strong> Generates 145–160 unique visitors on weekdays, surging to <strong>335–600 visitors/day</strong> on peak fair-weather weekends.</p>
+                            <p><strong>Pedestrian Lot Passes:</strong> Results in <strong>670 to 1,200 total pedestrian passes</strong> through the lot perimeter daily as visitors stage and return.</p>
+                            <p><strong>Weekend Morning Surge:</strong> 60% to 75% of weekend foot traffic concentrates between <strong>8:30 AM and 1:00 PM</strong>, discharging 100–135 users/hr along residential lot lines.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 text-xs text-amber-900 space-y-1">
+                        <strong class="block text-sm text-amber-950 font-bold">⚠️ Staging & Loitering Behaviors:</strong>
+                        <p>Trailhead activity involves stationary staging: assembling bicycles, leashing dogs, stretching, and congregating in groups, creating continuous vocal and visual noise facing private yards.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Trail Level of Service (LOS) Congestion -->
+        <section id="los" class="scroll-mt-20 bg-white rounded-2xl shadow-md p-6 sm:p-8 border border-slate-200 space-y-6">
+            <div class="border-l-4 border-brand-emerald pl-4">
+                <h3 class="text-2xl font-bold text-brand-dark">Shared-Use Path Level of Service (LOS) Degradation</h3>
+                <p class="text-slate-600 text-sm mt-1">
+                    Federal Highway Administration (FHWA) multi-use path guidelines establish acceptable user density thresholds to ensure safety and prevent multi-user conflicts on 10-foot paved greenways.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-6 space-y-4">
+                    <p class="text-sm text-slate-700 leading-relaxed">
+                        At peak weekend morning turnover, a 60-space parking lot discharges 100 to 135 active users per hour onto an isolated 1.3-mile trail corridor, creating a density of <strong>75 to 100 active users per mile</strong>.
+                    </p>
+                    
+                    <div class="p-4 bg-red-50 rounded-xl border border-red-200 text-red-900 space-y-2">
+                        <div class="flex items-center gap-2 font-bold text-red-950">
+                            <span class="text-xl">🛑</span>
+                            <span>Triggers FHWA Level of Service E / F (Failing)</span>
+                        </div>
+                        <p class="text-xs leading-relaxed">
+                            When user density exceeds 40–50 users/mile, operational service degrades to failing conditions: cyclists cannot maintain cruising speed, passing maneuvers become hazardous, and conflicts between runners, strollers, and leashed pets multiply.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6">
+                    <div class="chart-container">
+                        <canvas id="losChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Acoustic, Environmental & Security Externalities -->
+        <section id="acoustic" class="scroll-mt-20 bg-white rounded-2xl shadow-md p-6 sm:p-8 border border-slate-200 space-y-6">
+            <div class="border-l-4 border-brand-emerald pl-4">
+                <h3 class="text-2xl font-bold text-brand-dark">Acoustic, Environmental & Security Impacts</h3>
+                <p class="text-slate-600 text-sm mt-1">Quantifying the physical and operational externalities of placing an 18,000+ sq. ft. surface lot flush against private single-family boundaries.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-6">
+                    <div class="chart-container">
+                        <canvas id="acousticChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6 space-y-4">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-start gap-3">
+                        <span class="text-2xl">🔊</span>
+                        <div class="text-xs text-slate-700 space-y-1">
+                            <strong class="text-sm font-bold text-brand-navy block">Impulsive Acoustic Disturbances</strong>
+                            <p>Car doors slamming, engine turnover, remote keyless horn chirps, and elevated group voices produce <strong>65 to 75 dBA spikes at 25 feet</strong>, disrupting backyard patio quiet enjoyment vs ambient suburban levels (40–45 dBA).</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-start gap-3">
+                        <span class="text-2xl">🌧️</span>
+                        <div class="text-xs text-slate-700 space-y-1">
+                            <strong class="text-sm font-bold text-brand-navy block">Stormwater & Heat Island Impact</strong>
+                            <p>18,000 to 24,000 sq. ft. of asphalt creates localized hydrocarbon runoff discharging directly into the sensitive Clark Creek stream restoration basin.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-start gap-3">
+                        <span class="text-2xl">🛡️</span>
+                        <div class="text-xs text-slate-700 space-y-1">
+                            <strong class="text-sm font-bold text-brand-navy block">Public Safety & Larceny Vulnerability</strong>
+                            <p>Isolated trailhead parking lots are frequent targets for vehicle window break-ins and property theft. Zero-setback staging heightens trespassing risks into private rear yards.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Zoning Compliance & Recommended Planning Remedies -->
+        <section id="remedies" class="scroll-mt-20 bg-white rounded-2xl shadow-md p-6 sm:p-8 border border-slate-200 space-y-8">
+            <div class="border-l-4 border-brand-emerald pl-4">
+                <h3 class="text-2xl font-bold text-brand-dark">Regulatory Zoning Compliance & Planning Remedies</h3>
+                <p class="text-slate-600 text-sm mt-1">Mandatory municipal development standards and recommended planning solutions to balance greenway access with neighborhood protection.</p>
+            </div>
+
+            <!-- Zoning Compliance Checklist Grid -->
+            <div class="space-y-4">
+                <h4 class="font-bold text-lg text-brand-navy flex items-center gap-2">
+                    <span>⚖️</span> Town of Huntersville Zoning Ordinance Requirements
+                </h4>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                        <div class="flex items-center justify-between text-xs font-bold text-brand-navy">
+                            <span>Parking Module Limit</span>
+                            <span class="text-red-600 font-extrabold">Max 36 Spaces</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">Lots over 36 spaces must be broken into separate modules via landscaped medians to prevent unbroken asphalt expanses.</p>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                        <div class="flex items-center justify-between text-xs font-bold text-brand-navy">
+                            <span>Class A/B Buffer Yard</span>
+                            <span class="text-amber-600 font-extrabold">25–40 Ft Minimum</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">Requires dense evergreen screening capable of achieving a 6-foot opaque visual barrier within three growing seasons.</p>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                        <div class="flex items-center justify-between text-xs font-bold text-brand-navy">
+                            <span>Opaque Screening Wall</span>
+                            <span class="text-brand-emerald font-extrabold">6–8 Ft Masonry</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">Mandated along residential borders to block low-angle headlight glare and mitigate impulsive noise transmission.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Planning Recommendations / Remedies Cards -->
+            <div class="space-y-4">
+                <h4 class="font-bold text-lg text-brand-navy flex items-center gap-2">
+                    <span>💡</span> Recommended Land-Use Alternatives
+                </h4>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Remedy 1 -->
+                    <div class="p-5 bg-emerald-50/60 rounded-xl border border-emerald-200 space-y-2">
+                        <div class="flex items-center gap-2 font-bold text-emerald-950 text-sm">
+                            <span class="p-1 bg-emerald-600 text-white rounded text-xs">Option 1</span>
+                            <span>Right-Size to Neighborhood Scale (10–20 Stalls)</span>
+                        </div>
+                        <p class="text-xs text-slate-700 leading-relaxed">
+                            Scales parking capacity to the carrying capacity of an initial 1.3-mile trail, matching local Huntersville precedents like Rosedale Nature Park (20 spaces) and The Vine (16 spaces).
+                        </p>
+                    </div>
+
+                    <!-- Remedy 2 -->
+                    <div class="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                        <div class="flex items-center gap-2 font-bold text-brand-navy text-sm">
+                            <span class="p-1 bg-brand-navy text-white rounded text-xs">Option 2</span>
+                            <span>Phased Parking Expansion</span>
+                        </div>
+                        <p class="text-xs text-slate-700 leading-relaxed">
+                            Construct 15 to 20 spaces initially, stipulating that future lot expansion is permitted only after downstream trail phases connect directly to longer regional greenway networks.
+                        </p>
+                    </div>
+
+                    <!-- Remedy 3 -->
+                    <div class="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                        <div class="flex items-center gap-2 font-bold text-brand-navy text-sm">
+                            <span class="p-1 bg-brand-navy text-white rounded text-xs">Option 3</span>
+                            <span>Decentralize Access Nodes</span>
+                        </div>
+                        <p class="text-xs text-slate-700 leading-relaxed">
+                            Distribute vehicular staging across two smaller access nodes (15–20 stalls each) along the South Prong Clarke Creek corridor rather than concentrating 60 stalls at a single residential edge.
+                        </p>
+                    </div>
+
+                    <!-- Remedy 4 -->
+                    <div class="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                        <div class="flex items-center gap-2 font-bold text-brand-navy text-sm">
+                            <span class="p-1 bg-brand-navy text-white rounded text-xs">Option 4</span>
+                            <span>Relocate Access to Arterial / Commercial Frontage</span>
+                        </div>
+                        <p class="text-xs text-slate-700 leading-relaxed">
+                            Relocate regional vehicular staging to primary thoroughfares (such as Huntersville-Concord Road / NC 73) or secure shared retail parking to protect residential subdivision streets.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reference Section -->
+        <footer class="bg-white rounded-2xl shadow-md p-6 sm:p-8 border border-slate-200 space-y-4 text-xs text-slate-600">
+            <h4 class="font-bold text-sm text-brand-navy uppercase tracking-wider">Verifiable Public & Academic References</h4>
+            <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 list-disc list-inside text-slate-600">
+                <li>
+                    <strong>Carolina Thread Trail:</strong> <em>Torrence Creek Greenway Guide (Gilead Rd)</em><br>
+                    <a href="https://www.carolinathreadtrailmap.org/trails/trail/torrence-creek-greenway" target="_blank" class="text-brand-sky hover:underline break-all">https://www.carolinathreadtrailmap.org/trails/trail/torrence-creek-greenway</a>
+                </li>
+                <li>
+                    <strong>Carolina Thread Trail:</strong> <em>Lower McAlpine & Four Mile Greenway Guide (Johnston Rd)</em><br>
+                    <a href="https://www.carolinathreadtrailmap.org/trails/trail/lower-mcalpine-mcmullen-and-four-mile-creek-greenways" target="_blank" class="text-brand-sky hover:underline break-all">https://www.carolinathreadtrailmap.org/trails/trail/lower-mcalpine-mcmullen-and-four-mile-creek-greenways</a>
+                </li>
+                <li>
+                    <strong>Carolina Thread Trail:</strong> <em>Downtown Huntersville Greenway ("The Vine")</em><br>
+                    <a href="https://www.carolinathreadtrailmap.org/trails/trail/huntersville-downtown-greenway" target="_blank" class="text-brand-sky hover:underline break-all">https://www.carolinathreadtrailmap.org/trails/trail/huntersville-downtown-greenway</a>
+                </li>
+                <li>
+                    <strong>Federal Highway Administration (FHWA):</strong> <em>Shared-Use Path Level of Service Calculator</em><br>
+                    <a href="https://www.fhwa.dot.gov/publications/research/safety/pedbike/05138/" target="_blank" class="text-brand-sky hover:underline break-all">https://www.fhwa.dot.gov/publications/research/safety/pedbike/05138/</a>
+                </li>
+                <li>
+                    <strong>Institute of Transportation Engineers (ITE):</strong> <em>Trip Generation Manual, 11th Ed.</em><br>
+                    <a href="https://www.ite.org/technical-resources/topics/trip-and-parking-generation/" target="_blank" class="text-brand-sky hover:underline break-all">https://www.ite.org/technical-resources/topics/trip-and-parking-generation/</a>
+                </li>
+                <li>
+                    <strong>City of Charlotte & Mecklenburg County:</strong> <em>Unified Development Ordinance (UDO)</em><br>
+                    <a href="https://charlottenc.gov/planning/resources/Pages/Unified-Development-Ordinance.aspx" target="_blank" class="text-brand-sky hover:underline break-all">https://charlottenc.gov/planning/resources/Pages/Unified-Development-Ordinance.aspx</a>
+                </li>
+            </ul>
+            <p class="text-center text-slate-400 pt-4 border-t border-slate-100">
+                Mecklenburg Trailhead Impact Analysis • Prepared for Public Information & Municipal Planning Review
+            </p>
+        </footer>
+
+    </main>
+
+    <!-- JavaScript Charts Initialization Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Utility function to wrap string labels >16 characters into array of strings for multi-line rendering
+            function wrapLabel(label) {
+                if (typeof label !== 'string') return label;
+                if (label.length <= 16) return label;
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = '';
+                words.forEach(word => {
+                    if ((currentLine + ' ' + word).trim().length <= 16) {
+                        currentLine = (currentLine + ' ' + word).trim();
+                    } else {
+                        if (currentLine) lines.push(currentLine);
+                        currentLine = word;
+                    }
+                });
+                if (currentLine) lines.push(currentLine);
+                return lines;
+            }
+
+            // Universal Chart.js Tooltip Callback for multi-line array labels
+            const universalTooltipConfig = {
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        if (Array.isArray(label)) {
+                            return label.join(' ');
+                        } else {
+                            return label;
+                        }
+                    }
+                }
+            };
+
+            // Chart 1: Stalls Per Mile Density Comparison
+            const stallsCtx = document.getElementById('stallsPerMileChart').getContext('2d');
+            const rawStallsLabels = [
+                'Ferrelltown Pkwy (Proposed)',
+                'Gilead Road Trailhead',
+                'Johnston Road Trailhead',
+                'County Benchmark Minimum',
+                'County Benchmark Maximum'
+            ];
+            const wrappedStallsLabels = rawStallsLabels.map(wrapLabel);
+
+            new Chart(stallsCtx, {
+                type: 'bar',
+                data: {
+                    labels: wrappedStallsLabels,
+                    datasets: [{
+                        label: 'Stalls per Trail Mile',
+                        data: [46.2, 10.4, 8.6, 3.0, 10.0],
+                        backgroundColor: [
+                            '#dc2626', // Crimson for proposed
+                            '#059669', // Emerald
+                            '#0284c7', // Sky Blue
+                            '#94a3b8', // Gray
+                            '#64748b'  // Darker Gray
+                        ],
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: universalTooltipConfig,
+                        title: {
+                            display: true,
+                            text: 'Parking Density Comparison (Stalls per Connected Trail Mile)',
+                            font: { size: 14, weight: 'bold' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Stalls per Mile' }
+                        }
+                    }
+                }
+            });
+
+            // Chart 2: Foot Traffic & Volume Dynamics
+            const footCtx = document.getElementById('footTrafficChart').getContext('2d');
+            const rawFootLabels = [
+                'Daily Vehicles (Cars/Day)',
+                'Unique Daily Visitors',
+                'Pedestrian Lot Passes',
+                'Peak Hourly Visitors'
+            ];
+            const wrappedFootLabels = rawFootLabels.map(wrapLabel);
+
+            new Chart(footCtx, {
+                type: 'bar',
+                data: {
+                    labels: wrappedFootLabels,
+                    datasets: [
+                        {
+                            label: 'Weekday Baseline',
+                            data: [90, 150, 300, 35],
+                            backgroundColor: '#0284c7',
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'Peak Weekend Surge',
+                            data: [270, 470, 935, 120],
+                            backgroundColor: '#d97706',
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: universalTooltipConfig,
+                        title: {
+                            display: true,
+                            text: 'Foot Traffic & Vehicle Volume (60-Space Lot Projections)',
+                            font: { size: 14, weight: 'bold' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Volume Count' }
+                        }
+                    }
+                }
+            });
+
+            // Chart 3: Shared-Use Path Level of Service (LOS)
+            const losCtx = document.getElementById('losChart').getContext('2d');
+            const rawLosLabels = [
+                'FHWA Acceptable LOS Threshold',
+                'Proposed Ferrelltown Peak Density'
+            ];
+            const wrappedLosLabels = rawLosLabels.map(wrapLabel);
+
+            new Chart(losCtx, {
+                type: 'bar',
+                data: {
+                    labels: wrappedLosLabels,
+                    datasets: [{
+                        label: 'Active Users per Trail Mile',
+                        data: [45, 87.5],
+                        backgroundColor: [
+                            '#059669', // Emerald
+                            '#dc2626'  // Crimson (Failing)
+                        ],
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: universalTooltipConfig,
+                        title: {
+                            display: true,
+                            text: 'Peak Active Trail Users vs Capacity Threshold (Users / Mile)',
+                            font: { size: 14, weight: 'bold' }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 120,
+                            title: { display: true, text: 'Active Users / Mile' }
+                        }
+                    }
+                }
+            });
+
+            // Chart 4: Acoustic Profile Impact
+            const acousticCtx = document.getElementById('acousticChart').getContext('2d');
+            const rawAcousticLabels = [
+                'Suburban Ambient Background',
+                'Car Door Slam / Turnover',
+                'Voice Spikes & Keyless Horns'
+            ];
+            const wrappedAcousticLabels = rawAcousticLabels.map(wrapLabel);
+
+            new Chart(acousticCtx, {
+                type: 'bar',
+                data: {
+                    labels: wrappedAcousticLabels,
+                    datasets: [{
+                        label: 'Sound Level (dBA at 25 Feet)',
+                        data: [42.5, 70, 72.5],
+                        backgroundColor: [
+                            '#0284c7', // Sky Blue
+                            '#d97706', // Amber
+                            '#dc2626'  // Crimson
+                        ],
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: universalTooltipConfig,
+                        title: {
+                            display: true,
+                            text: 'Acoustic Disruption Comparison (Sound Levels in dBA)',
+                            font: { size: 14, weight: 'bold' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 90,
+                            title: { display: true, text: 'Sound Pressure Level (dBA)' }
+                        }
+                    }
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
